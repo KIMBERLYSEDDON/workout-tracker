@@ -1,10 +1,11 @@
 const router = require("express").Router();
-const { Workout, Exercise, Stats } = require("../../models");
+const { Workout, Exercise } = require("../../models");
 
 router.get("/", (req, res) => {
 
     Workout.find().sort({ date: -1 }).limit(1)
     .then(dbWorkout => {
+        console.log(dbWorkout)
         res.json(dbWorkout);
     })
     .catch(err => {
@@ -21,9 +22,8 @@ router.post("/", ({ body }, res) => {
     });
 });
 
-router.put("/:id", ({ body }, res) => {
-    Exercise.create(body)
-    .then(({ _id }) => Workout.findOneAndUpdate({}, { $push: { exercises: _id } }, { new: true }))
+router.put("/:id", (req, res) => {
+    Workout.findOneAndUpdate({_id: req.params.id }, { $push: { exercises: req.body } }, { new: true })
     .then(dbExercise => {
         res.json(dbExercise);
     })
