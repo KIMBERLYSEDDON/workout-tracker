@@ -1,9 +1,15 @@
 const router = require("express").Router();
-const { Workout, Exercise } = require("../../models");
+const { Workout } = require("../../models");
 
 router.get("/", (req, res) => {
+ 
+    Workout.aggregate([
 
-    Workout.find().sort({ date: -1 }).limit(1)
+        {$addFields: {
+            totalDuration: { $sum: "$exercises.duration"}
+        }}
+        
+    ]).sort({ day: -1 }).limit(1)
     .then(dbWorkout => {
         console.log(dbWorkout)
         res.json(dbWorkout);
@@ -31,6 +37,22 @@ router.put("/:id", (req, res) => {
         res.status(400).json(err);
     });
 });
+router.get("/range", (req, res) => {
+    Workout.aggregate([
+
+        {$addFields: {
+            totalDuration: { $sum: "$exercises.duration"}
+        }}
+        
+    ]).sort({ day: -1 }).limit(7)
+
+    .then(dbWorkouts => {
+        res.json(dbWorkouts);
+    })
+    .catch(err => {
+        res.status(400).json(err)
+    })
+})
 
 
 module.exports = router;

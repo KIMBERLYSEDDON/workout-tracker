@@ -10,13 +10,27 @@ totalDuration: {
     type: Number
 },
 exercises: [
-    // {
-    //   type: Schema.Types.ObjectId,
-    //   ref: "Exercise"
-    // }
-  ]
+//     {
+//     type: String,
+//     name: String,
+//     weight: Number,
+//     sets: Number,
+//     reps: Number,
+//     distance: Number,
+//     duration: Number
+// }
+]
 });
 
+// WorkoutSchema.methods.getTotalDuration = function() {
+//     this.totalDuration = this.exercises.aggregate([
+//         { $addField: {
+//             totalDuration: {$sum: "$duration"}
+//         }}
+//     ])
+//     return this.totalDuration;
+// }
+// const agg = Workout.exercises.aggregate( {$addFields: {totalDuration: {$sum: "$duration"}}})
 const Workout = mongoose.model("Workout", WorkoutSchema);
 
 module.exports = Workout;
