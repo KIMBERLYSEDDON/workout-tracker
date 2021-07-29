@@ -6,20 +6,32 @@ day: {
     type: Date,
     default: Date.now
 },
-totalDuration: {
-    type: Number
-},
 exercises: [
-//     {
-//     type: String,
-//     name: String,
-//     weight: Number,
-//     sets: Number,
-//     reps: Number,
-//     distance: Number,
-//     duration: Number
-// }
-]
+    {
+    type: {
+       type: String,
+       trim: true,
+       required: true
+    },
+    name: {
+        type: String,
+        trim: true,
+        required: true
+    },
+    weight: {
+        type: Number
+    },
+    sets: Number,
+
+    reps: Number,
+
+    distance: Number,
+
+    duration: {
+        type: Number, 
+        required: true
+    }
+}]
 });
 
 const Workout = mongoose.model("Workout", WorkoutSchema);
